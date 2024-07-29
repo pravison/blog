@@ -97,7 +97,7 @@ def comments(request):
         comment = Comment(name=name, blog = blog, email=email, message=message)
         comment.save()
         messages.success(request, 'comment published successfuly!!')
-        return redirect('http://www.localhost:8000/blog/' + blog_id  + '#comment' )
+        return redirect('https://blog.salesflowpro.xyz/blog/' + blog_id  + '#comment' )
 
 def NewsLetter(request):
     if request.method == 'POST':
