@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 from tinymce.models import HTMLField  
 
 # Create your models here.
@@ -23,7 +23,9 @@ class Tag(models.Model):
 class Blog(models.Model):
     author = models.CharField(max_length=150)
     title = models.CharField(max_length=150)
+    slug = models.SlugField(null=False, unique=True)
     thumbnail = models.ImageField(blank=True)
+    summary = HTMLField(blank=True)
     content = HTMLField()
     tags = models.ManyToManyField(Tag, blank=True)
     categories = models.ForeignKey(Categories, blank=True, null=True, on_delete=models.SET_NULL)
@@ -33,6 +35,9 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("blog_single", kwargs={"slug": self.slug})
 
     @property
     def imageURL(self):

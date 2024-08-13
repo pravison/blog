@@ -1,6 +1,8 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block title%} {{blog.title}} {%endblock title%}
+{% block meta%} {{blog.summary|safe}} {%endblock meta%}
+
 {% block content %}
 
   <main id="main">
@@ -168,7 +170,7 @@
                   {% else %}
                   <img src="{% static 'assets/img/blog-' %}{{blog.id}}.jpg" style="width: 100%;" class="img-fluid" alt=""/>
                   {% endif %}
-                  <h4><a href="{% url 'blog_single' blog.id %}">{{blog.title}}</a></h4>
+                  <h4><a href="{% url 'blog_single' blog.slug %}">{{blog.title}}</a></h4>
                   <time datetime="2020-01-01">{{ blog.dateUpdated }}</time>
                 </div>
                 {%endfor%}

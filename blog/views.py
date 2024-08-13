@@ -71,10 +71,10 @@ def search(request):
     }
     return render(request, 'search.html', context)
 
-def blogSingleView(request, id):
-    blog = get_object_or_404(Blog, id=id)
+def blogSingleView(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
     blogs = Blog.objects.filter(categories = blog.categories).exclude(id = blog.id)[:5]#reltaed blogs
-    tags = Tag.objects.filter(blog__id = id)
+    tags = Tag.objects.filter(blog__id = blog.id)
     
     comments = blog.comment_set.all()
     context = {
@@ -97,7 +97,7 @@ def comments(request):
         comment = Comment(name=name, blog = blog, email=email, message=message)
         comment.save()
         messages.success(request, 'comment published successfuly!!')
-        return redirect('https://blog.salesflowpro.xyz/blog/' + blog_id  + '#comment' )
+        return redirect('https://blog.salesflowpro.xyz/blog/' + blog.slug  + '#comment' )
 
 def NewsLetter(request):
     if request.method == 'POST':
